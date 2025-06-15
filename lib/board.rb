@@ -8,6 +8,16 @@ class Board
     @grid = grid
   end
 
+  def place_token(token, column)
+    return if column.negative?
+
+    row = -1
+    row += 1 while grid.dig(row + 1, column) == '⚫'
+    return if row.negative?
+
+    grid[row][column] = token
+  end
+
   def to_s
     output_str = "C1 C2 C3 C4 C5 C6 C7\n"
     grid.each { |row| output_str += "#{row.join(' ')}\n" }
