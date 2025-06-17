@@ -367,4 +367,52 @@ RSpec.describe Board do
       end
     end
   end
+
+  describe '#full?' do
+    # Incoming Query Message -> Test the return value
+
+    context 'when the grid is empty' do
+      subject(:board_empty_check_full) { described_class.new }
+
+      it 'returns false' do
+        expect(board_empty_check_full).to_not be_full
+      end
+    end
+
+    context 'when the grid is normal: non-empty and non-full with a mixture of colored disks' do
+      let(:normal_grid) do
+        [
+          %w[🔵 ⚫ ⚫ ⚫ ⚫ ⚫ ⚫],
+          %w[⚫ ⚫ ⚫ ⚫ ⚫ ⚫ ⚫],
+          %w[⚫ ⚫ ⚫ ⚫ 🔴 ⚫ ⚫],
+          %w[⚫ ⚫ ⚫ ⚫ ⚫ ⚫ ⚫],
+          %w[⚫ ⚫ 🔴 🔵 🔴 ⚫ ⚫],
+          %w[⚫ ⚫ 🔴 🔴 🔵 ⚫ ⚫]
+        ]
+      end
+      subject(:board_normal_check_full) { described_class.new(normal_grid) }
+
+      it 'returns false' do
+        expect(board_normal_check_full).to_not be_full
+      end
+    end
+
+    context 'when the grid is full' do
+      let(:full_grid) do
+        [
+          %w[🔵 🔵 🔴 🔵 🔵 🔵 🔴],
+          %w[🔴 🔴 🔴 🔴 🔵 🔴 🔵],
+          %w[🔴 🔵 🔴 🔵 🔴 🔵 🔴],
+          %w[🔵 🔵 🔴 🔴 🔵 🔵 🔵],
+          %w[🔵 🔴 🔴 🔵 🔴 🔵 🔴],
+          %w[🔵 🔵 🔴 🔴 🔵 🔴 🔵]
+        ]
+      end
+      subject(:board_full_check_full) { described_class.new(full_grid) }
+
+      it 'returns true' do
+        expect(board_full_check_full).to be_full
+      end
+    end
+  end
 end
