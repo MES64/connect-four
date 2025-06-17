@@ -8,6 +8,10 @@ class Board
     @grid = grid
   end
 
+  def full?
+    grid.flatten.none? { |token| token == '⚫' }
+  end
+
   def valid_move?(column)
     return false if column.negative?
 
