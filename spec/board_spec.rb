@@ -295,4 +295,76 @@ RSpec.describe Board do
       end
     end
   end
+
+  describe '#valid_move?' do
+    # Incoming Query Message -> Test return value
+
+    context 'when the grid is empty' do
+      subject(:board_valid_empty) { described_class.new }
+
+      it 'returns true' do
+        expect(board_valid_empty).to be_valid_move 0
+      end
+    end
+
+    context 'when the grid is normal: non-empty and non-full with a mixture of colored disks' do
+      let(:normal_grid) do
+        [
+          %w[🔵 ⚫ ⚫ ⚫ ⚫ ⚫ ⚫],
+          %w[⚫ ⚫ ⚫ ⚫ ⚫ ⚫ ⚫],
+          %w[⚫ ⚫ ⚫ ⚫ 🔴 ⚫ ⚫],
+          %w[⚫ ⚫ ⚫ ⚫ ⚫ ⚫ ⚫],
+          %w[⚫ ⚫ 🔴 🔵 🔴 ⚫ ⚫],
+          %w[⚫ ⚫ 🔴 🔴 🔵 ⚫ ⚫]
+        ]
+      end
+      subject(:board_valid_normal) { described_class.new(normal_grid) }
+
+      it 'returns true for column 1' do
+        expect(board_valid_normal).to be_valid_move 1
+      end
+
+      it 'returns true for column 2' do
+        expect(board_valid_normal).to be_valid_move 2
+      end
+
+      it 'returns true for column 4' do
+        expect(board_valid_normal).to be_valid_move 4
+      end
+
+      it 'returns false for blocked column 0' do
+        expect(board_valid_normal).to_not be_valid_move 0
+      end
+
+      it 'returns false for column -1' do
+        expect(board_valid_normal).to_not be_valid_move(-1)
+      end
+
+      it 'returns false for column -5' do
+        expect(board_valid_normal).to_not be_valid_move(-5)
+      end
+
+      it 'returns false for column 7' do
+        expect(board_valid_normal).to_not be_valid_move 7
+      end
+    end
+
+    context 'when the grid is full' do
+      let(:full_grid) do
+        [
+          %w[🔵 🔵 🔴 🔵 🔵 🔵 🔴],
+          %w[🔴 🔴 🔴 🔴 🔵 🔴 🔵],
+          %w[🔴 🔵 🔴 🔵 🔴 🔵 🔴],
+          %w[🔵 🔵 🔴 🔴 🔵 🔵 🔵],
+          %w[🔵 🔴 🔴 🔵 🔴 🔵 🔴],
+          %w[🔵 🔵 🔴 🔴 🔵 🔴 🔵]
+        ]
+      end
+      subject(:board_valid_full) { described_class.new(full_grid) }
+
+      it 'returns false' do
+        expect(board_valid_full).to_not be_valid_move 6
+      end
+    end
+  end
 end
