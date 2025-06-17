@@ -8,6 +8,12 @@ class Board
     @grid = grid
   end
 
+  def valid_move?(column)
+    return false if column.negative?
+
+    grid[0][column] == '⚫'
+  end
+
   def place_token(token, column)
     return if column.negative?
 
