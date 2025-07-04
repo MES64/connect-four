@@ -50,7 +50,7 @@ RSpec.describe Board do
       end
     end
 
-    context 'when the board if full of disks of different colors' do
+    context 'when the grid is full of disks of different colors' do
       let(:full_grid) do
         [
           %w[🔵 🔵 🔴 🔵 🔵 🔵 🔴],
