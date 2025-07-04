@@ -36,9 +36,10 @@ class Board
   end
 
   def to_s
-    output_str = "C1 C2 C3 C4 C5 C6 C7\n"
-    grid.each { |row| output_str += "#{row.join(' ')}\n" }
-    output_str
+    header = (1..grid[0].length).map { |column_number| "C#{column_number}" }
+    header_string = "#{header.join(' ')}\n"
+    grid_rows = grid.map { |row| "#{row.join(' ')}\n" }
+    header_string + grid_rows.join
   end
 
   private
