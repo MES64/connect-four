@@ -16,4 +16,12 @@ class Game
 
     'Draw!' if board.full?
   end
+
+  def make_move
+    loop do
+      return if board.valid_move?(0)
+
+      puts 'Invalid Input!'
+    end
+  end
 end
