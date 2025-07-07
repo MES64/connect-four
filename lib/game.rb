@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
+require_relative 'board'
+
 # Game objects represent the state of the connect four game
 class Game
   attr_accessor :current_token
   attr_reader :board
 
-  def initialize(board:, current_token: '🔵')
+  def initialize(board: Board.new, current_token: '🔵')
     @board = board
     @current_token = current_token
   end
