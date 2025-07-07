@@ -233,4 +233,30 @@ RSpec.describe Game do
       end
     end
   end
+
+  describe '#switch_token' do
+    # Incoming Command Message -> Test change in observable state
+
+    let(:board) { instance_double(Board) }
+
+    context 'when the current token is "🔵"' do
+      subject(:game_switch_blue) { described_class.new(board:, current_token: '🔵') }
+
+      it 'sets the current token to "🔴"' do
+        game_switch_blue.switch_token
+        current_token = game_switch_blue.current_token
+        expect(current_token).to eql('🔴')
+      end
+    end
+
+    context 'when the current token is "🔴"' do
+      subject(:game_switch_red) { described_class.new(board:, current_token: '🔴') }
+
+      it 'sets the current token to "🔵"' do
+        game_switch_red.switch_token
+        current_token = game_switch_red.current_token
+        expect(current_token).to eql('🔵')
+      end
+    end
+  end
 end
