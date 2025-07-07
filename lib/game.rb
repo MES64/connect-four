@@ -2,11 +2,12 @@
 
 # Game objects represent the state of the connect four game
 class Game
-  attr_reader :board, :current_token
+  attr_accessor :current_token
+  attr_reader :board
 
-  def initialize(board:)
+  def initialize(board:, current_token: '🔵')
     @board = board
-    @current_token = '🔵'
+    @current_token = current_token
   end
 
   def result
@@ -30,5 +31,9 @@ class Game
 
   def user_input_column
     gets.to_i - 1
+  end
+
+  def switch_token
+    self.current_token = current_token == '🔵' ? '🔴' : '🔵'
   end
 end
