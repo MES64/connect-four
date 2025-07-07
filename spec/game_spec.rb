@@ -166,4 +166,71 @@ RSpec.describe Game do
       end
     end
   end
+
+  describe '#user_input_column' do
+    # Incoming Query Message -> Test value returned
+
+    let(:board) { instance_double(Board) }
+    subject(:game_input) { described_class.new(board:) }
+
+    context 'when the user inputs "1"' do
+      before do
+        allow(game_input).to receive(:gets).and_return('1\n')
+      end
+
+      it 'returns integer 0' do
+        expect(game_input.user_input_column).to eql(0)
+      end
+    end
+
+    context 'when the user inputs "2"' do
+      before do
+        allow(game_input).to receive(:gets).and_return('2\n')
+      end
+
+      it 'returns integer 1' do
+        expect(game_input.user_input_column).to eql(1)
+      end
+    end
+
+    context 'when the user inputs "-1"' do
+      before do
+        allow(game_input).to receive(:gets).and_return('-1\n')
+      end
+
+      it 'returns integer -2' do
+        expect(game_input.user_input_column).to eql(-2)
+      end
+    end
+
+    context 'when the user inputs non-numeric characters at end: "7h"' do
+      before do
+        allow(game_input).to receive(:gets).and_return('7h\n')
+      end
+
+      it 'ignores them and returns integer 6' do
+        expect(game_input.user_input_column).to eql(6)
+      end
+    end
+
+    context 'when the user inputs non-numeric characters at start: "h7"' do
+      before do
+        allow(game_input).to receive(:gets).and_return('h7\n')
+      end
+
+      it 'returns integer -1' do
+        expect(game_input.user_input_column).to eql(-1)
+      end
+    end
+
+    context 'when the user does not enter any numeric characters: ""' do
+      before do
+        allow(game_input).to receive(:gets).and_return('\n')
+      end
+
+      it 'returns integer -1' do
+        expect(game_input.user_input_column).to eql(-1)
+      end
+    end
+  end
 end
