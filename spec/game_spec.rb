@@ -259,4 +259,51 @@ RSpec.describe Game do
       end
     end
   end
+
+  describe '#play' do
+    # Looping Script -> Test the behavior
+    # Loop until the result is set (not nil)
+
+    let(:board) { instance_double(Board) }
+    subject(:game_play) { described_class.new(board:) }
+
+    before do
+      allow(game_play).to receive(:puts)
+      allow(game_play).to receive(:make_move)
+      allow(game_play).to receive(:switch_token)
+    end
+
+    context 'when the result is set from the start' do
+      before do
+        allow(game_play).to receive(:result).and_return('🔴 Wins!')
+      end
+
+      it 'returns immediately and does not send the #make_move message' do
+        expect(game_play).to_not receive(:make_move)
+        game_play.play
+      end
+    end
+
+    context 'when the result is nil once, then set' do
+      before do
+        allow(game_play).to receive(:result).and_return(nil, '🔵 Wins!')
+      end
+
+      it 'sends the #make_move message exactly once' do
+        expect(game_play).to receive(:make_move).exactly(1).time
+        game_play.play
+      end
+    end
+
+    context 'when the result is nil four times, then set' do
+      before do
+        allow(game_play).to receive(:result).and_return(nil, nil, nil, nil, 'Draw!')
+      end
+
+      it 'sends the #make_move message exactly four times' do
+        expect(game_play).to receive(:make_move).exactly(4).times
+        game_play.play
+      end
+    end
+  end
 end
