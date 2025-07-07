@@ -2,10 +2,11 @@
 
 # Game objects represent the state of the connect four game
 class Game
-  attr_reader :board
+  attr_reader :board, :current_token
 
   def initialize(board:)
     @board = board
+    @current_token = '🔵'
   end
 
   def result
@@ -19,7 +20,9 @@ class Game
 
   def make_move
     loop do
-      return if board.valid_move?(0)
+      puts 'Enter an unblocked column 1-7'
+      column = user_input_column
+      return board.place_token(current_token, column) if board.valid_move?(column)
 
       puts 'Invalid Input!'
     end
