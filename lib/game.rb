@@ -11,7 +11,17 @@ class Game
   end
 
   def play
-    make_move until result
+    puts 'Welcome to Connect Four! Please choose who goes first and start play...'
+    loop do
+      puts board
+      puts
+      current_result = result
+      return puts current_result if current_result
+
+      puts current_token
+      make_move
+      switch_token
+    end
   end
 
   def result
