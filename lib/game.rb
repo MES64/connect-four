@@ -24,4 +24,8 @@ class Game
       puts 'Invalid Input!'
     end
   end
+
+  def user_input_column
+    gets.to_i - 1
+  end
 end
