@@ -130,7 +130,7 @@ RSpec.describe Game do
     before do
       allow(board).to receive(:place_token)
       allow(game_move).to receive(:puts)
-      allow(game_move).to receive(:gets)
+      allow(game_move).to receive(:user_input_column)
     end
 
     context 'when the input is valid' do
