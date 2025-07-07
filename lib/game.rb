@@ -10,6 +10,10 @@ class Game
     @current_token = current_token
   end
 
+  def play
+    make_move until result
+  end
+
   def result
     red_four = board.four_in_row?('🔴')
     blue_four = board.four_in_row?('🔵')
